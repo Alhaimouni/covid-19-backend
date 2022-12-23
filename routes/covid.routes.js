@@ -1,24 +1,57 @@
 'use strict';
 
 const express = require('express');
+const { cardModel } = require('../models/covid.model');
 
 const router = express.Router();
 
-function getCards(req, res) {
-  res.send('getCards route');
+function getRecords(req, res, next) {
+  try {
+    cardModel.find({}, ((err, result) => {
+      if (err) {
+        next(`${err}`);
+      } else {
+        res.status(200).send(result);
+      }
+    }));
+  } catch (error) {
+    next(`inside getCards handler : ${error}`);
+  }
 }
 
-function addCard(req, res) {
-  res.send('addCard route');
+function addRecord(req, res, next) {
+  try {
+    cardModel.create(req.body);
+    cardModel.find({}, (err, result) => {
+      if (err) {
+        next(`${err}`);
+      } else {
+        res.status(201).send(result);
+      }
+    });
+  } catch (error) {
+    next(`inside addCard handler : ${error}`);
+  }
 }
 
-function deleteCards(req, res) {
-  res.send('deleteCard route');
+function deleteRecord(req, res, next) {
+  try {
+    const { id } = req.params;
+    cardModel.remove({ _id: id }, (err, result) => {
+      if (err) {
+        next(`${err}`);
+      } else {
+        res.send(`Deleted`);
+      }
+    });
+  } catch (error) {
+    next(`inside deleteCard handler : ${error}`);
+  }
 }
 
-router.get('/getCards', getCards);
-router.post('/addCard', addCard);
-router.delete('/deleteCard', deleteCards);
+router.get('/getRecords', getRecords);
+router.post('/addRecord', addRecord);
+router.delete('/deleteRecord/:id', deleteRecord);
 
 
 

@@ -1,7 +1,14 @@
 'use strict';
 
 const { start } = require('./server');
+const mongoose = require('mongoose');
 require('dotenv').config();
-const { PORT } = require('./config');
 
+const { PORT, DB } = require('./config');
+
+mongoose.connect(DB);
 start(PORT);
+
+
+
+// let BookModel = mongoose.model('booksdb',Book);
