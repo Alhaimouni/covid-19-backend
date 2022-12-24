@@ -1,10 +1,13 @@
 'use strict';
 
 const { start } = require('./server');
-const mongoose = require('mongoose');
+const { sequelize } = require('./models/index');
 require('dotenv').config();
+const { PORT } = require('./config');
 
-const { PORT, DB } = require('./config');
 
-mongoose.connect(DB);
-start(PORT);
+
+
+sequelize.sync()
+  .then(() => { start(PORT) })
+  .catch(() => { console.log(`cannot sync models with Database `) });
