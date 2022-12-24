@@ -8,7 +8,3 @@ const { PORT, DB } = require('./config');
 
 mongoose.connect(DB);
 start(PORT);
-
-
-
-// let BookModel = mongoose.model('booksdb',Book);
