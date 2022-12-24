@@ -49,9 +49,9 @@ function deleteRecord(req, res, next) {
   }
 }
 
-router.get('/getRecords', getRecords);
-router.post('/addRecord', addRecord);
-router.delete('/deleteRecord/:id', deleteRecord);
+router.get('/getrecords', getRecords);
+router.post('/addrecord', addRecord);
+router.delete('/deleterecord/:id', deleteRecord);
 
 
 
