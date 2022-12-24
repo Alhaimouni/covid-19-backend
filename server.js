@@ -13,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(cardsRoutes);
+app.get('/', (req, res) => res.status(200).send('Home Route'));
 
 app.use('*', notFound);
 app.use(internalError);
